@@ -42,7 +42,7 @@
                 this.$get(this.$interfacres.getBookDetail, {bookId: 3}).then(res => {
                     this.showData = true;
                     window.console.log(res);
-                    this.bookDetail = res;
+                    this.bookDetail = res.data;
                 });
             }
         }

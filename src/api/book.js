@@ -10,6 +10,10 @@ let interfaces = {
     //***********
     //***********
     //***********
+    book_add: 'book/add',
+    book_list: 'book/list',
+    book_del: 'book/del',
+    book_detail: 'book/detail',
 };
 
 export default interfaces;
