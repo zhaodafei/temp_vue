@@ -4,7 +4,7 @@ import Qs from 'qs'
 
 //定义变量
 // let base_url=process.env.VUE_APP_BASE_URL;
-var base_url = process.env.VUE_APP_BASE_URL;
+// var base_url = process.env.VUE_APP_BASE_URL;
 // var base_url='http://demo.yizheng_fei.com/api/';
 // console.log("eeeeeeeeeeeee", process.env);
 // console.log("eeeeeeeeeeeee",base_url);
@@ -14,7 +14,9 @@ var axios_instance = originAxios.create({
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
     },
-    baseURL: base_url
+    // 使用代理,在 vue.config.js 中配置
+    // baseURL: base_url,
+    baseURL: "/api" // url前缀
 });
 
 /**

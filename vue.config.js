@@ -43,13 +43,15 @@ module.exports = {
         port: 8083,
         https: false,
         hotOnly: false,
-        proxy: {// 设置代理
+        proxy: {// 设置代理,解决跨域问题
             '/api': {
-                target: 'https://www.test.com/',
+                // target: 'https://www.test.com/',
+                // target: 'http://demo.yizheng_fei.com/',
+                target: process.env.VUE_APP_SHOW_URL,
                 changeOrigin: true,
-                pathRewrite: {
-                    '^/api': '/'
-                }
+                // pathRewrite: {
+                //     '^/api': '/'
+                // }
             }
         },
         before: app => {}
