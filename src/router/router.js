@@ -3,6 +3,21 @@ import Router from 'vue-router'
 
 Vue.use(Router);
 
+// 导入其他文件下面的路由
+const otherRoutes = [];
+
+function importALL() {
+    let context = require.context("./", true, /\.routes\.js/);
+
+    context.keys().forEach(key => {
+        context(key).default.forEach(r => {
+            otherRoutes.push(r);
+        });
+    });
+}
+
+importALL();
+
 // 组件模块
 import HelloWorld from '../components/HelloWorld.vue'
 
@@ -40,8 +55,9 @@ export default new Router({
             },
             component: () => import(/* webpackChunkName: "404" */ '../views/404.vue'),
         },
+        ...otherRoutes  // 导入其他文件下面的路由
         //************************* ↓↓↓ generalPage 模块 ↓↓↓  ************************* 
-        {
+        /*{
             path: '/general-index',
             name: 'general-index',
             meta:{
@@ -60,9 +76,9 @@ export default new Router({
                 isLogin: false,
             },
             component: () =>  import('../views/generalPage/study01.vue'),
-        },
+        },*/
         //************************* ↓↓↓ httpPage 模块 ↓↓↓  ************************* 
-        {
+        /*{
             path: '/http-index',
             name: 'http-index',
             meta:{
@@ -118,6 +134,6 @@ export default new Router({
                 isLogin: true,
             },
             component: () =>  import('../views/httpPage/book/bookAdd.vue'),
-        },
+        },*/
     ]
 })
