@@ -7,6 +7,7 @@
         </div>
         <div class="main-url">
             <router-link tag="button" :to="{ path: '/general-index' }">非网络请求页面</router-link>
+            <router-link tag="button" :to="{ path: '/mobile-index' }">mobile请求页面</router-link>
             <router-link tag="button" :to="{ path: '/http-index' }">HTTP网络请求页面</router-link>
         </div>
     </div>

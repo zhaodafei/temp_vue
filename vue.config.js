@@ -1,3 +1,5 @@
+const webpack = require("webpack");
+
 module.exports = {
     // 基本路径
     publicPath: './',
@@ -10,7 +12,14 @@ module.exports = {
     runtimeCompiler: false,
     // webpack配置
     // see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
-    chainWebpack: () => {},
+    chainWebpack: (config) => {
+        config.plugin('provide').use(webpack.ProvidePlugin, [{
+            $: 'jquery',
+            jquery: 'jquery',
+            jQuery: 'jquery',
+            'window.jQuery': 'jquery'
+        }])
+    },
     configureWebpack: () => {},
     // 生产环境是否生成 sourceMap 文件
     productionSourceMap: false,
@@ -40,9 +49,9 @@ module.exports = {
         //将服务启动后默认打开浏览器
         open: true,
         host: '0.0.0.0',
-        port: 8083,
-        https: false,
-        hotOnly: false,
+        port: 8084,
+        // https: false,
+        // hotOnly: false,
         proxy: {// 设置代理,解决跨域问题
             '/api': {
                 // target: 'https://www.test.com/',
@@ -50,10 +59,11 @@ module.exports = {
                 target: process.env.VUE_APP_SHOW_URL,
                 changeOrigin: true,
                 // pathRewrite: {
-                //     '^/api': '/'
+                //     '^/api': '/api'
                 // }
             }
         },
+        // proxy:"http://demo.yizheng_fei.com/api/",
         before: app => {}
     },
     // 第三方插件配置

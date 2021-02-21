@@ -15,10 +15,21 @@
             <loginCloseBtn style="margin-left: 10px;">我是组件</loginCloseBtn>
             <login-close-btn style="margin-left: 10px;">我是组件</login-close-btn>
         </div>
-        
+
+        <p>{{this.$store.state.book.bookStateName}}</p>
+
         <div>
             <h3>Bus 使用</h3>
             <div><button @click="cliMe">点击我</button></div>
+            
+        </div>
+        <div>
+            <div>{{bar}} ___ {{bar2}}</div>
+            <div>{{hello}}</div>
+
+            <div>{{daFei.setName("WEB")}} __赋值</div>
+            <div>{{daFei}}</div>   <!--  { "name": "WEB", "age": 18 }  -->
+            <div>{{daFei.name}}</div> <!--   WEB  -->
         </div>
     </div>
 </template>
@@ -28,6 +39,10 @@
     import likeBtn from '../../components/like-btn.vue'
     import loginCloseBtn from '../../components/close-btn.vue'
     import Bus from '@/utils/eventBus';
+
+    import {feiMixins, mixins2} from "./feiMixins.js" //  mixins
+    import {feiExtends} from "./feiExtends.js" // extends
+    import {feiClass} from "./feiClass.js"  // class
     
     export default {
         name: "study01",
@@ -35,10 +50,18 @@
             loginLikeBtn: likeBtn,
             loginCloseBtn
         },
+        mixins: [feiMixins,mixins2],
+        extends: feiExtends,
         created() {
             console.log(this.$store.state.book);
             console.log(this.$store.state.book.bookState);
             console.log(this.$store.state.book.bookStateName);
+        },
+        data() {
+            return {
+                foo: "foo_01",
+                daFei: new feiClass()
+            }
         },
         mounted() {
             Bus.$on('daFeiBus',function (val) {

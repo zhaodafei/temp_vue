@@ -15,7 +15,7 @@ var axios_instance = originAxios.create({
         'Content-Type': 'application/x-www-form-urlencoded'
     },
     // 使用代理,在 vue.config.js 中配置
-    // baseURL: base_url,
+    // baseURL: base_url
     baseURL: "/api" // url前缀
 });
 
