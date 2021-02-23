@@ -39,7 +39,7 @@
         methods: {
             // 图书详细
             cliDetail() {
-                this.$get(this.$interfacres.getBookDetail, {bookId: 3}).then(res => {
+                this.$get(this.$interfaces.getBookDetail, {bookId: 3}).then(res => {
                     this.showData = true;
                     window.console.log(res);
                     this.bookDetail = res.data;

@@ -4,6 +4,7 @@
         <div class="main-url">
             <router-link tag="button" :to="{ path: '/' }">首页-Home</router-link>
             <router-link tag="button" :to="{ path: '/detail01' }">图书详细</router-link>
+            <router-link tag="button" :to="{ path: '/http-bill-index' }">账单列表</router-link>
         </div>
         <div class="main-url">
             <router-link tag="button" :to="{ path: '/http-login' }">登录</router-link>
@@ -17,7 +18,7 @@
             <p>数据添加地址: {{ base_url }}book/add </p>
             <p>数据详情地址: {{ base_url }}book/detail?id=3 </p>
             <p>数据删除地址: {{ base_url }}book/del?id=5 </p><br>
-            <p>免登陆数据详情地址: {{ base_url }}user/detail?id=3 </p>
+            <p>免登陆数据详情地址: {{ base_url }}user/detail?bookId=3 </p>
         </div>
     </div>
 </template>
