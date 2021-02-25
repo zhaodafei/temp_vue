@@ -4,31 +4,27 @@
         <div class="main-url">
             <router-link tag="button" :to="{ path: '/' }">首页-Home</router-link>
             <router-link tag="button" :to="{ path: '/http-index' }">首页-Page</router-link>
-        </div>
-        <br><br>
-        <div>
-            <a-button type="danger" @click="handleDelData">删除</a-button> 
+            <router-link tag="button" :to="{ path: '/http-bill-count-list' }">月账单统计列表</router-link>
+            <a-button type="danger" @click="handleDelData">删除</a-button>
             <a-button type="primary" @click="handleAddData">添加</a-button>
         </div>
         <div>
-            <div>
-                <a-table bordered
-                         :title="()=>{return '我是账单列表'}"
-                         :columns="columns" 
-                         :data-source="dataSource"
-                         :rowKey="(record,index)=>{return index}"
-                         :scroll="{x:'max-content',y:'10'}"
-                         :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onChange}"
-                         :pagination="false">
-                </a-table>
-                <a-pagination
-                        size="small"
-                        :total="total"
-                        :pageSize="pageSize"
-                        :showTotal="total => `共 ${total} 条`"
-                        @change="changeCurrent">
-                </a-pagination>
-            </div>
+            <a-table bordered
+                     :title="()=>{return '我是账单列表'}"
+                     :columns="columns" 
+                     :data-source="dataSource"
+                     :rowKey="(record,index)=>{return index}"
+                     :scroll="{x:'max-content',y:'10'}"
+                     :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onChange}"
+                     :pagination="false">
+            </a-table>
+            <a-pagination
+                    size="small"
+                    :total="total"
+                    :pageSize="pageSize"
+                    :showTotal="total => `共 ${total} 条`"
+                    @change="changeCurrent">
+            </a-pagination>
         </div>
         <div style="height: 100px"></div>
     </div>
@@ -66,11 +62,10 @@
                 columns,
                 total: 0,
                 currentPage: 1,
-                pageSize: 5,
-                // goodsAddResult: '', // 图书添加成功消息提醒
-                goodsDetail: {}, // 我是图书详情
-                goodsId: '', // 图书id
-                goodsIds: '', // 图书id批量操作
+                pageSize: 10,
+                // goodsDetail: {}, // 我是图书详情
+                // goodsId: '', // 图书id
+                // goodsIds: '', // 图书id批量操作
             };
         },
         created() {
@@ -98,7 +93,18 @@
                 this.selectedRowItems = selectedRows;
             },
             handleAddData() {
-                this.$router.push({path: '/http-bill-add'});
+                // let lastConsumeTime = this.dataSource.length > 0 ? this.dataSource[0].consumeTime : this.$moment().format("YYYY-MM-DD HH:mm:ss");
+                // let lastConsumeWay = this.dataSource.length > 0 ? this.dataSource[0].consumeWay : "线下";
+                if (this.dataSource.length > 0) {
+                    sessionStorage.setItem("lastDataSourceOne", JSON.stringify(this.dataSource[0]));
+                }
+                this.$router.push({
+                    path: '/http-bill-add',
+                    query:{
+                        // lastConsumeTime,
+                        // lastConsumeWay
+                    },
+                });
             },
             handleDelData() {
                 let that = this;

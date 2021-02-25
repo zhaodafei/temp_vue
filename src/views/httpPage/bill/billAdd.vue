@@ -8,25 +8,29 @@
         </div>
         <br><br>
         <div>
-            <a-form :label-col="labelCol" :wrapper-col="wrapperCol" class="corrosion-form-wrapper" :form="form">
+            <a-form :label-col="labelCol" :wrapper-col="wrapperCol" class="form-wrapper" :form="form">
                 <a-form-item label="商品名称">
                     <a-input placeholder="请输入" v-decorator="goodsName"></a-input>
                 </a-form-item>
                 <a-form-item label="单价">
-                    <a-input placeholder="请输入" v-decorator="unitPrice"></a-input>
+                    <a-input-number placeholder="请输入" v-decorator="unitPrice"></a-input-number>
                 </a-form-item>
                 <a-form-item label="数量">
-                    <a-input placeholder="请输入" v-decorator="goodsNumber"></a-input>
+                    <a-input-number placeholder="请输入" v-decorator="goodsNumber"></a-input-number>
                 </a-form-item>
                 <a-form-item label="消费途径">
-                    <a-input placeholder="请输入" v-decorator="consumeWay"></a-input>
+                        <a-radio-group v-decorator="consumeWay">
+                            <a-radio value="线下">线下</a-radio>
+                            <a-radio value="线上">线上</a-radio>
+                        </a-radio-group>
                 </a-form-item>
                 <a-form-item label="备注">
                     <a-input placeholder="请输入" v-decorator="goodsComment"></a-input>
                 </a-form-item>
                 <a-form-item label="购买时间">
-                    <a-date-picker placeholder="请选择" v-decorator="consumeTime" show-time format="YYYY-MM-DD HH:mm:ss" />
+                    <a-date-picker placeholder="请选择" v-decorator="consumeTime" show-time :format="dateFormat"></a-date-picker>
                 </a-form-item>
+                
                 <a-form-item :wrapper-col="wrapperColItem">
                     <a-button type="primary" @click="handleReset">重置</a-button>
                     <a-button type="primary" @click="handleSubmit" :style="{ marginLeft: '8px' }">提交</a-button>
@@ -42,8 +46,6 @@
     import Antd from 'ant-design-vue'  //这是ant-design-vue
     import 'ant-design-vue/dist/antd.css'
     Vue.use(Antd);
-    // Vue.use(Button);
-    // Vue.use({aForm:Form});
     /* 这是ant-design-vue */
     
     export default {
@@ -58,14 +60,30 @@
                 // goodsName: ['goodsName', {initialValue:"西瓜xxx", rules: [{required: true, message: '商品名称'}]}],
                 goodsName: ['goodsName', {rules: [{required: true, message: '商品名称'}]}],
                 unitPrice: ['unitPrice', {rules: [{required: true, message: '单价'}]}],
-                goodsNumber: ['goodsNumber', {rules: [{required: true, message: '数量'}]}],
+                goodsNumber: ['goodsNumber', {initialValue: 1,rules: [{required: true, message: '数量'}]}],
                 consumeWay: ['consumeWay', {rules: [{required: true, message: '消费途径'}]}],
-                goodsComment: ['goodsComment', {rules: [{required: true, message: '备注'}]}],
+                goodsComment: ['goodsComment', {initialValue: '无', rules: [{required: true, message: '备注'}]}],
                 consumeTime: ['consumeTime', {rules: [{ type: 'object', required: true, message: '请选择时间!' }]}],
+                lastConsumeTime: "",
+                lastConsumeWay: "",
             };
         },
         created() {
-            // this.getList();
+        },
+        mounted() {
+            if (sessionStorage.getItem("lastDataSourceOne")) {
+                let lastDataSourceOne = JSON.parse(sessionStorage.getItem("lastDataSourceOne"));
+                this.form.setFieldsValue({
+                    'consumeTime': this.$moment(lastDataSourceOne.consumeTime),
+                    'consumeWay': lastDataSourceOne.consumeWay
+                });
+            }else {
+                console.log(this.$moment());
+                this.form.setFieldsValue({
+                    'consumeTime': this.$moment(),
+                    'consumeWay': "线下"
+                });
+            }
         },
         methods:{
             handleSubmit() {
@@ -79,7 +97,6 @@
                             goodsComment: fieldsValue.goodsComment,
                             consumeTime: fieldsValue.consumeTime.format(this.dateFormat),
                         };
-                       
                         this.$post(this.$interfaces.goodsAdd, params).then(res=>{
                             if (res.error === 0) {
                                 this.$router.push({path: '/http-bill-index', query: {tipMsg: '图书添加成功'}});
@@ -93,7 +110,10 @@
             handleReset() {
                 this.form.resetFields();
             }
-        }
+        },
+        destroyed() {
+            sessionStorage.removeItem('lastDataSourceOne');
+        },
     }
 </script>
 
