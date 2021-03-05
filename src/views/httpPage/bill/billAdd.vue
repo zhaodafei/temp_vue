@@ -32,7 +32,7 @@
                 </a-form-item>
                 
                 <a-form-item :wrapper-col="wrapperColItem">
-                    <a-button type="primary" @click="handleReset">重置</a-button>
+                    <a-button @click="handleReset">重置</a-button>
                     <a-button type="primary" @click="handleSubmit" :style="{ marginLeft: '8px' }">提交</a-button>
                 </a-form-item>
             </a-form>
