@@ -24,12 +24,18 @@
             
         </div>
         <div>
+            <h3>mixins extends class 使用</h3>
             <div>{{bar}} ___ {{bar2}}</div>
             <div>{{hello}}</div>
 
             <div>{{daFei.setName("WEB")}} __赋值</div>
             <div>{{daFei}}</div>   <!--  { "name": "WEB", "age": 18 }  -->
             <div>{{daFei.name}}</div> <!--   WEB  -->
+        </div>
+        <div>
+            <h3>指令</h3>
+            <input type="text" v-my-fei-directive><br>
+            <input type="text" v-my-fei-directive2="{color:'blue',text:'图书_论语'}">
         </div>
     </div>
 </template>

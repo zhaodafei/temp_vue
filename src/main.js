@@ -17,6 +17,24 @@ Vue.config.productionTip = false;
 Vue.prototype.$interfaces = interfaces; // 定义接口常量
 Vue.prototype.$moment = moment; // 时间  this.$moment().format('YYYY-MM-DD HH:mm:ss');   
 
+//指令
+Vue.directive('my-fei-directive', {
+    inserted: function (el, binging, vnode, oldVnode) {
+        el.focus();
+        el.style.borderColor = "red";
+        el.value = "我是fei";
+    }
+});
+/*Vue.directive('my-fei-directive2', {
+    inserted: function (el, binging, vnode, oldVnode) {
+        console.log(binging.value);
+        el.focus();
+        el.style.borderColor = binging.value.color;
+        el.value = binging.value.text;
+    }
+});*/
+import importDirective from "./utils/directiveUtils";
+Vue.use(importDirective);
 
 // 登录判断
 router.beforeEach((to, form, next) => {
