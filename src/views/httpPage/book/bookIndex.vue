@@ -7,131 +7,120 @@
         </div>
         <br><br>
         <div>
-            <el-button size="medium" type="primary" @click="delBook()">删除</el-button>
-            <router-link tag="el-button" :to="{ path: '/http-book-add' }">图书添加</router-link>
+            <a-button type="danger" @click="delBook()">删除</a-button>
+            <router-link tag="button" :to="{ path: '/http-book-add' }">图书添加</router-link>
         </div>
-        <div>
-            <el-table :data="tableData" :key="10000" @selection-change="selectChange" style="width: 100%;">
-                <el-table-column type="selection"></el-table-column>
-                <el-table-column prop="id" label="id" width="80"></el-table-column>
-                <el-table-column prop="name" label="姓名" width="180"></el-table-column>
-                <el-table-column prop="price" label="价格" width="100"></el-table-column>
-                <el-table-column prop="num_add" label="删除次数" width="100"></el-table-column>
-                <el-table-column prop="author" label="作者" width="180"></el-table-column>
-                <el-table-column prop="time_aaa" label="日期" width="380"></el-table-column>
-                <el-table-column label="详细" style="color: red;" width="150">
-                    <template class="fei" slot-scope="scope">
-                        <el-button size="mini" type="text" :bookId="bookId" @click="bookDetailMethod(scope.row.id)">详情</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-            
-            <!-- 分页 -->
-            <el-pagination
-                    layout="total, sizes, prev, pager, next, jumper"
-                    :page-size="per_page"
-                    :page-sizes="[5,10,15,20]"
-                    @current-change="handleCurrentChange"
-                    @size-change="handleSizeChange"
-                    :total="total">
-            </el-pagination>
+        <a-table bordered
+                 :title="()=>{return '我是图书列表'}"
+                 :columns="columns"
+                 :data-source="dataSource"
+                 :rowKey="(record,index)=>{return index}"
+                 :scroll="{x:'max-content',y:'10'}"
+                 :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onChange}"
+                 :pagination="false">
+            <span slot="customAge" slot-scope="text, record" style="color: #ff6b81">
+                <a-button type="link" @click="bookDetailMethod(record.id)">详情</a-button>
+            </span>
+        </a-table>
+        <a-pagination
+                size="small"
+                :total="total"
+                :pageSize="pageSize"
+                :showTotal="total => `共 ${total} 条`"
+                @change="changeCurrent">
+        </a-pagination>
 
-           <!-- <router-view class="引用children路由"/>--> <!-- 可以做详情,弹窗-->
-
-            <!-- 图书详情 -->
-            <div id="book_detail">
-                <template>
-                    <h3>这里是图书详细:</h3>
-                    <ul :data="bookDetail">
-                        <li>ID: {{bookDetail.id}}</li>
-                        <li>姓名: {{bookDetail.name}}</li>
-                        <li>价格: {{bookDetail.price}}</li>
-                        <li>作者: {{bookDetail.author}}</li>
-                        <li>时间: {{bookDetail.create_time}}</li>
-                    </ul>
-
-                </template>
-            </div>
+        <!-- 图书详情 -->
+        <div id="book_detail">
+            <template>
+                <h3>这里是图书详细:</h3>
+                <ul :data="bookDetail">
+                    <li>ID: {{bookDetail.id}}</li>
+                    <li>姓名: {{bookDetail.name}}</li>
+                    <li>价格: {{bookDetail.price}}</li>
+                    <li>作者: {{bookDetail.author}}</li>
+                    <li>时间: {{bookDetail.create_time}}</li>
+                </ul>
+            </template>
         </div>
+        <br><br><br>
     </div>
 </template>
 
 <script>
+    /* 这是ant-design-vue */
+    import Vue from 'vue'
+    import Antd from 'ant-design-vue'  //这是ant-design-vue
+    import 'ant-design-vue/dist/antd.css'
+    Vue.use(Antd);
+    /* 这是ant-design-vue */
+
+    const columns = [
+        {title: 'ID', dataIndex: 'id', key: 'id', width: 30,},
+        {title: '姓名', dataIndex: 'name', key: 'name', width: 80,},
+        {title: '价格', dataIndex: 'price', key: 'price', width: 30,},
+        {title: '删除次数', dataIndex: 'num_add', key: 'num_add', width: 30,},
+        {title: '作者', dataIndex: 'author', key: 'author', width: 30,},
+        {title: '日期', dataIndex: 'time_aaa', key: 'time_aaa', width: 30,},
+        {title: '详细', dataIndex: 'detail', key: 'detail', width: 30, scopedSlots: { customRender: 'customAge' }},
+    ];
+
+    const dataSource = [
+        {id: 'id1', name: '史记', price: '¥50', author: 'dafei', num_add: '0', date: '2016-05-02', time_aaa: '2016-05-02', detail: 'detail'},
+        {id: 'id2', name: '汉书', price: '¥100', author: 'dafei', num_add: '0', date: '2016-05-02', time_aaa: '2016-05-02', detail: 'detail'}
+    ];
     export default {
         name: "bookIndex",
         data() {
             return {
-                tableData: [
-                    {
-                        name: '史记',
-                        price: '¥50',
-                        author: 'dafei',
-                        num_add: '0',
-                        date: '2016-05-02',
-                        detail: 'detail'
-                    }, {
-                        name: '汉书',
-                        price: '¥100',
-                        author: 'dafei',
-                        num_add: '0',
-                        date: '2016-05-02',
-                        detail: 'detail'
-                    }],
+                selectedRowKeys: [], // 配置默认复选框列 
+                selectedRowItems: [],
+                dataSource,
+                columns,
                 total: 0,
-                page: 1,
-                per_page: 5,
+                currentPage: 1,
+                pageSize: 5,
                 bookAddResult: '', // 图书添加成功消息提醒
                 bookDetail: {}, // 我是图书详情
                 bookId: '', // 图书id
                 bookIds: '', // 图书id批量操作
-            };
+            }
         },
-        mounted(){
-            // 页面一加载完成就执行getList方法
+        created() {
             this.getList();
-            this.bookAddResult = this.$route.query.bookAddResult;//图书添加成功消息提醒
         },
-        methods: {
-            // 分页
-            handleCurrentChange(page) {
-                this.page = page;
-                this.getList();
-            },
-            handleSizeChange(size) {
-                this.page = 1;
-                this.per_page = size;
-                this.getList();
-            },
-
-            // 批量操作
-            selectChange(val) {
-                this.bookIds = val.map(item => {
-                    return item.id;
-                });
-            },
-
-            // 列表
+        methods:{
             getList() {
-                this.loading = true;
-                let params = {
-                    page: this.page,
-                    per_page: this.per_page
-                };
-                this.$get('book/list', params).then(res => {
+                this.selectedRowKeys= [];
+                this.selectedRowItems= [];
+                this.dataSource = [];
+
+                let params = {page: this.currentPage, per_page: this.pageSize};
+                this.$get("book/list", params).then(res => {
                     res.data.forEach(k => {
                         k.time_aaa = k.create_time;
                         // k.time_aaa = new Date().getTime();
                         // k.time_aaa = (new Date()).toLocaleDateString();
                     });
-                    this.loading = false;
-                    this.tableData = res.data;
+                    this.dataSource = res.data;
                     this.total = res.page_count;
                 })
             },
+            changeCurrent(currentPage, pageSize) {
+                this.currentPage = currentPage;
+                this.pageSize = pageSize;
+                this.getList();
+            },
+            onChange(selectedRowKeys, selectedRows) {
+                this.selectedRowKeys = selectedRowKeys;
+                this.selectedRowItems = selectedRows;
 
+                this.bookIds = selectedRows.map(item => {
+                    return item.id;
+                });
+            },
             //图书详情
             bookDetailMethod(bookId) {
-                // this.loading = true;
                 var params = {
                     bookId: bookId
                 };
@@ -139,8 +128,6 @@
                     this.bookDetail = res.data;
                 });
             },
-
-            // 删除
             delBook() {
                 let params = {
                     book_ids: this.bookIds
@@ -148,23 +135,11 @@
                 this.$post('book/del', params).then(() => {
                     this.getList();
                 });
-            },
-        },
+            }
+        }
     }
 </script>
 
-<style lang="scss" scoped>
-    #fei-demo {
-        h1 {
-            color: #ff9b90;
-        }
+<style scoped>
 
-        .el-table {
-            margin-bottom: 30px;
-        }
-
-        .el-pagination {
-            margin-bottom: 100px;
-        }
-    }
 </style>
