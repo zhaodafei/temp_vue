@@ -57,6 +57,16 @@ export default new Router({
             },
             component: () => import(/* webpackChunkName: "404" */ '../views/404.vue'),
         },
+        {
+            path: '/http-login',
+            name: 'http-login',
+            meta:{
+                title: "http-login-title",
+                content: "http-login-content",
+                isLogin: false,
+            },
+            component: () =>  import('../views/httpPage/login.vue'),
+        },
         ...otherRoutes
         //************************* ↓↓↓ generalPage 模块 ↓↓↓  ************************* 
         /*{
@@ -139,16 +149,6 @@ export default new Router({
                 isLogin: false,
             },
             component: () =>  import('../views/httpPage/detail01.vue'),
-        },
-        {
-            path: '/http-login',
-            name: 'http-login',
-            meta:{
-                title: "http-login-title",
-                content: "http-login-content",
-                isLogin: false,
-            },
-            component: () =>  import('../views/httpPage/login.vue'),
         },
         {
             path: '/http-book-index',

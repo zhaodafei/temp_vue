@@ -21,16 +21,6 @@ export default [
         component: () =>  import('@/views/httpPage/detail01.vue'),
     },
     {
-        path: '/http-login',
-        name: 'http-login',
-        meta:{
-            title: "http-login-title",
-            content: "http-login-content",
-            isLogin: false,
-        },
-        component: () =>  import('@/views/httpPage/login.vue'),
-    },
-    {
         path: '/http-book-index',
         name: 'http-book-index',
         meta:{
