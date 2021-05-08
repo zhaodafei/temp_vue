@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router/router'
 import store from './store/index'
-import "./utils/element.js"
+// import "./utils/element.js" // 使用 Element 的UI
 import './assets/css/common.scss'
 import './utils/http/axios_instance.js'
 import interfaces from './api/interfaces.js'
@@ -34,6 +34,7 @@ Vue.directive('my-fei-directive', {
     }
 });*/
 import importDirective from "./utils/directiveUtils";
+import Element from "element-ui";
 Vue.use(importDirective);
 
 // 登录判断
