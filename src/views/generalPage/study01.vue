@@ -37,6 +37,12 @@
             <input type="text" v-my-fei-directive><br>
             <input type="text" v-my-fei-directive2="{color:'blue',text:'图书_论语'}">
         </div>
+        <div>
+            <h3>mathjs 计算使用</h3>
+            <div>
+                <button @click="mathFun">mathJs 开始计算</button>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -49,7 +55,10 @@
     import {feiMixins, mixins2} from "./feiMixins.js" //  mixins
     import {feiExtends} from "./feiExtends.js" // extends
     import {feiClass} from "./feiClass.js"  // class
-    
+    import {
+        atan2, chain, derivative, e, evaluate, log, pi, pow, round, sqrt, format as math_format
+    } from 'mathjs'
+
     export default {
         name: "study01",
         components: {
@@ -77,6 +86,11 @@
         methods:{
             cliMe() {
                 Bus.$emit('daFeiBus',"发送数据")
+            },
+            mathFun() {
+                console.log("dddddddd");
+                console.log(atan2(3, -3)); // pi              // 0.75
+                console.log(math_format(0.3*3.0,4));
             }
         }
     }
