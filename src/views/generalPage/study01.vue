@@ -6,7 +6,7 @@
             <router-link tag="button" :to="{ path: '/general-index' }">首页-Page</router-link>
             <router-link tag="button" :to="{ path: '/general-study01' }">组件测试</router-link>
         </div>
-        
+
         <div>
             <h3>下面是 components 组件的使用</h3>
             <loginLikeBtn style="margin-left: 0;">我是组件</loginLikeBtn>
@@ -21,7 +21,7 @@
         <div>
             <h3>Bus 使用</h3>
             <div><button @click="cliMe">点击我</button></div>
-            
+
         </div>
         <div>
             <h3>mixins extends class 使用</h3>
@@ -55,9 +55,7 @@
     import {feiMixins, mixins2} from "./feiMixins.js" //  mixins
     import {feiExtends} from "./feiExtends.js" // extends
     import {feiClass} from "./feiClass.js"  // class
-    import {
-        atan2, chain, derivative, e, evaluate, log, pi, pow, round, sqrt, format as math_format
-    } from 'mathjs'
+    import { BigNumber } from "bignumber.js";
 
     export default {
         name: "study01",
@@ -88,14 +86,18 @@
                 Bus.$emit('daFeiBus',"发送数据")
             },
             mathFun() {
-                console.log("dddddddd");
-                console.log(atan2(3, -3)); // pi              // 0.75
-                console.log(math_format(0.3*3.0,4));
+                let a = new BigNumber(3);
+                let b = new BigNumber(0.3);
+                // 加减乘除
+                console.log(a.plus(b).toNumber()); // 3.3
+                console.log(a.minus(b).toNumber()); // 2.7
+                console.log(a.multipliedBy(b).toNumber()); // 0.9
+                console.log(a.div(b).toNumber()); // 10
             }
         }
     }
 </script>
 
 <style scoped>
-    
+
 </style>
