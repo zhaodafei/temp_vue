@@ -81,18 +81,19 @@
                 console.log("准备接受数据", val);
             })
         },
+
         methods:{
             cliMe() {
                 Bus.$emit('daFeiBus',"发送数据")
             },
             mathFun() {
-                let a = new BigNumber(3);
-                let b = new BigNumber(0.3);
-                // 加减乘除
-                console.log(a.plus(b).toNumber()); // 3.3
-                console.log(a.minus(b).toNumber()); // 2.7
-                console.log(a.multipliedBy(b).toNumber()); // 0.9
-                console.log(a.div(b).toNumber()); // 10
+            let a = new BigNumber(3);
+            let b = new BigNumber(0.3);
+            // 加减乘除
+            console.log(a.plus(b).toNumber()); // 3.3
+            console.log(a.minus(b).toNumber()); // 2.7
+            console.log(a.multipliedBy(b).toNumber()); // 0.9
+            console.log(a.div(b).toNumber()); // 10
             }
         }
     }
