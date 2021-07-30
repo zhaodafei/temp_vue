@@ -38,9 +38,9 @@
             <input type="text" v-my-fei-directive2="{color:'blue',text:'图书_论语'}">
         </div>
         <div>
-            <h3>mathjs 计算使用</h3>
+            <h3>BigNumber 计算使用</h3>
             <div>
-                <button @click="mathFun">mathJs 开始计算</button>
+                <button @click="mathFun">BigNumber 开始计算</button>
             </div>
         </div>
     </div>
@@ -73,11 +73,15 @@
         data() {
             return {
                 foo: "foo_01",
-                daFei: new feiClass()
+                daFei: new feiClass(),
             }
         },
         mounted() {
-            Bus.$on('daFeiBus',function (val) {
+            /*Bus.$on('daFeiBus',function (val) {
+                console.log("准备接受数据", val);
+            })*/
+            // 防止事件多次触发,先解绑在绑定
+            Bus.$off("daFeiBus").$on('daFeiBus',function (val) {
                 console.log("准备接受数据", val);
             })
         },
