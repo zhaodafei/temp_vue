@@ -1,16 +1,23 @@
 <template>
     <div>
-        study333333333333333
+        study333333333333333  <el-button type="primary">主要按钮</el-button>
     </div>
 </template>
 <script>
 
     /* 这是ant-design-vue */
-    import Vue from 'vue'
-    import Antd, { message,Select } from 'ant-design-vue'  //这是ant-design-vue
-    import 'ant-design-vue/dist/antd.css'
-    Vue.use(Antd);
+    // import Vue from 'vue'
+    // import Antd, { message,Select } from 'ant-design-vue'  //这是ant-design-vue
+    // import 'ant-design-vue/dist/antd.css'
+    // Vue.use(Antd);
     /* 这是ant-design-vue */
+
+    /* 这是ElementUI */
+    import Vue from 'vue'
+    import ElementUI from 'element-ui';
+    import 'element-ui/lib/theme-chalk/index.css';
+    Vue.use(ElementUI);
+    /* 这是ElementUI */
 
 
     export default {
