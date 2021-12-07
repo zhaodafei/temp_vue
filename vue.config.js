@@ -19,6 +19,11 @@ module.exports = {
             jQuery: 'jquery',
             'window.jQuery': 'jquery'
         }])
+        // html-webpack-plugin 配置 see https://www.npmjs.com/package/html-webpack-plugin
+        config.plugin('html').tap(option => {
+            option[0].title = "我是daFei_title" // 默认 页面中使用 <%= htmlWebpackPlugin.options.title %>
+            return option;
+        })
     },
     configureWebpack: () => {},
     // 生产环境是否生成 sourceMap 文件
@@ -44,7 +49,7 @@ module.exports = {
     // see https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa
     pwa: {},
     // webpack-dev-server 相关配置
-    devServer: { 
+    devServer: {
         // open: process.platform === 'darwin',
         //将服务启动后默认打开浏览器
         open: true,
