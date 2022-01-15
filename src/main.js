@@ -9,13 +9,15 @@ import interfaces from './api/interfaces.js'
 import moment from "moment";
 import "moment/locale/zh-cn";
 moment.locale("zh-cn");
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
 
 // 阻止启动生产消息
 Vue.config.productionTip = false;
 
 // Vue.prototype.$interfacres = interfaces;
 Vue.prototype.$interfaces = interfaces; // 定义接口常量
-Vue.prototype.$moment = moment; // 时间  this.$moment().format('YYYY-MM-DD HH:mm:ss');   
+Vue.prototype.$moment = moment; // 时间  this.$moment().format('YYYY-MM-DD HH:mm:ss');
 
 //指令
 Vue.directive('my-fei-directive', {
