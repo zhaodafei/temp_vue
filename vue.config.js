@@ -1,8 +1,14 @@
 const webpack = require("webpack");
 
 module.exports = {
-    // 基本路径
-    publicPath: './',
+    /**
+     * 基本路径
+     * 默认情况下，Vue CLI 会假设你的应用是被部署在一个域名的根路径上
+     * 例如 https://www.fei.com/。如果应用被部署在一个子路径上，你就需要用这个选项指定这个子路径。
+     * 例如，如果你的应用被部署在 https://www.fei.com/admin/，则设置 baseUrl 为 /admin/。
+     * */
+    // publicPath: './',
+    publicPath: '/', // 历史模式中不能加点
     // 打包输出文件目录
     outputDir: 'dist',
     // eslint-loader 是否在保存的时候检查
