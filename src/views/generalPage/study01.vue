@@ -14,6 +14,8 @@
             <br/><br/>
             <loginCloseBtn style="margin-left: 10px;">我是组件</loginCloseBtn>
             <login-close-btn style="margin-left: 10px;">我是组件</login-close-btn>
+
+            <FeiTest :cdata="{name:'我是父级传入name'}" />
         </div>
 
         <p>{{this.$store.state.book.bookStateName}}</p>
@@ -50,6 +52,7 @@
     //喜欢组件
     import likeBtn from '../../components/like-btn.vue'
     import loginCloseBtn from '../../components/close-btn.vue'
+    import FeiTest from '@/components/FeiTest.vue'
     import Bus from '@/utils/eventBus';
 
     import {feiMixins, mixins2} from "./feiMixins.js" //  mixins
@@ -61,7 +64,8 @@
         name: "study01",
         components: {
             loginLikeBtn: likeBtn,
-            loginCloseBtn
+            loginCloseBtn,
+            FeiTest
         },
         mixins: [feiMixins,mixins2],
         extends: feiExtends,
